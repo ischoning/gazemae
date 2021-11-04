@@ -1,7 +1,7 @@
 import logging
 import time
 import pickle
-from os import path
+from os import path, getcwd
 
 import h5py
 import numpy as np
@@ -58,6 +58,7 @@ class EyeTrackingCorpus:
         logging.info('Extracting raw data...'.format(self.name))
 
         data_file = self.dir + '-data.pickle'
+        #data_file = str(getcwd()) + self.dir + '-data.pickle'
         if not path.exists(data_file):
             extract_start = time.time()
             self.data = pd.DataFrame(

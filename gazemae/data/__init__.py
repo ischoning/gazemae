@@ -3,7 +3,7 @@ from .corpora import *
 
 
 CORPUS_LIST = {
-    'EMVIC2014': EMVIC2014,
+    #'EMVIC2014': EMVIC2014,
     'Cerf2007-FIFA': Cerf2007_FIFA,
     'ETRA2019': ETRA2019,
     'MIT-LowRes': MIT_LowRes,
@@ -11,7 +11,8 @@ CORPUS_LIST = {
 
 
 frequencies = {
-    1000: ['EMVIC2014', 'Cerf2007-FIFA'],
+    #1000: ['EMVIC2014', 'Cerf2007-FIFA'],
+    1000: ['Cerf2007-FIFA'],
     500: ['ETRA2019'],
     # the ones from MIT are 240Hz but oh well
     250: ['MIT-LowRes'],

@@ -1,5 +1,6 @@
 import logging
 from argparse import ArgumentParser
+from os import getcwd
 
 # training settings
 MAX_TRAIN_ITERS = 20000
@@ -25,8 +26,11 @@ DECODER_PARAMS = [DECODER_KERNEL_SIZE, DECODER_FILTERS, DECODER_DILATIONS,
 # data settings
 MAX_X_RESOLUTION = 1280
 MAX_Y_RESOLUTION = 1024
-DATA_ROOT = '../data/'
-GENERATED_DATA_ROOT = '../generated-data/'
+LOCAL_PATH = getcwd()
+#DATA_ROOT = '../data/'
+DATA_ROOT = LOCAL_PATH + '/data/'
+#GENERATED_DATA_ROOT = '../generated-data/'
+GENERATED_DATA_ROOT = LOCAL_PATH + '/generated-data/'
 
 SLICE_OVERLAP_RATIO = 0.2
 
@@ -46,7 +50,10 @@ def setup_logging(args, run_identifier=''):
         for handler in logging.root.handlers[:]:
             logging.roost.removeHandler(handler)
         log_filename = run_identifier + '.log'
-        logging.basicConfig(filename='../logs/' + log_filename,
+        # logging.basicConfig(filename='../logs/' + log_filename,
+        #                     level=logging.INFO,
+        #                     format='%(message)s')
+        logging.basicConfig(filename=LOCAL_PATH + '/logs/' + log_filename,
                             level=logging.INFO,
                             format='%(message)s')
         logging.getLogger().addHandler(logging.StreamHandler())

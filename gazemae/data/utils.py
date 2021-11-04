@@ -6,7 +6,9 @@ import numpy as np
 
 
 def load(filename, file_format, **kwargs):
+    #filename = str(os.getcwd()) + str(filename)
     if file_format == 'matlab':
+        print("FILENAME:", filename)
         return io.loadmat(filename, squeeze_me=True)
     if file_format == 'excel':
         return pd.read_excel(filename, sheet_name=kwargs['sheet'])
@@ -17,6 +19,8 @@ def load(filename, file_format, **kwargs):
 
 def listdir(directory):
     # a wrapper just to prepend DATA_ROOT
+    #directory = str(os.getcwd())+str(directory)
+    print("PATH:", directory)
     return [f for f in os.listdir(directory)
             if not f.startswith('.')]
 

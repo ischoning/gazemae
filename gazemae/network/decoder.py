@@ -53,7 +53,8 @@ class CausalDecoder(nn.Module):
     def forward(self, z, x_true, is_training):
         # pad the input at its left so there is no leak from input t=1 to
         # output t=1. should be: output for t=1 is dependent on input t=0
-        x = cat((x_true, zeros(x_true.shape[0], 2, 1).cuda()), dim=2)
+        #x = cat((x_true, zeros(x_true.shape[0], 2, 1).cuda()), dim=2)
+        x = cat((x_true, zeros(x_true.shape[0], 2, 1).cpu()), dim=2)
 
         x = nn.functional.dropout(x, self.input_dropout, is_training)
         """
@@ -158,8 +159,10 @@ class AutoregressiveDecoder(nn.Module):
                                      1 - self.p_teacher_forcing]))
 
         self._init_conv_queues(z.shape[0])
-        predictions = zeros(z.shape[0], self.in_channels, self.in_dim).cuda()
-        x = zeros(z.shape[0], 2, 1).cuda()
+        #predictions = zeros(z.shape[0], self.in_channels, self.in_dim).cuda()
+        #x = zeros(z.shape[0], 2, 1).cuda()
+        predictions = zeros(z.shape[0], self.in_channels, self.in_dim).cpu()
+        x = zeros(z.shape[0], 2, 1).cpu()
 
         # z_projection = self.latent_projections[0](z)
         z_projections = [p(z) if p else None for p in self.latent_projections]
@@ -214,10 +217,12 @@ class AutoregressiveResidualBlock(nn.Module):
         # each queue for a layer has length = dilation * ksize-1
         self.conv1_queue = zeros(
             self.dilation1 * (self.kernel_size - 1),
-            batch_size, self._in_queue_dim, 1).cuda()
+            #batch_size, self._in_queue_dim, 1).cuda()
+            batch_size, self._in_queue_dim, 1).cpu()
         self.conv2_queue = zeros(
             self.dilation2 * (self.kernel_size - 1),
-            batch_size, self._mid_queue_dim, 1).cuda()
+            #batch_size, self._mid_queue_dim, 1).cuda()
+            batch_size, self._mid_queue_dim, 1).cpu()
 
     def forward(self, x, z=None):
         def _get_dilated_nodes(queue, dilation, new_node):

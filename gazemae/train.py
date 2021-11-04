@@ -25,9 +25,9 @@ class Trainer:
         self.model = ModelManager(args)
 
         self.save_model = args.save_model
-        self.cuda = args.cuda
-        if self.cuda:
-            self.model.network = self.model.network.cuda()
+        #self.cuda = args.cuda
+        #if self.cuda:
+        #    self.model.network = self.model.network.cuda()
 
         self.rec_loss = args.rec_loss
 
@@ -134,8 +134,8 @@ class Trainer:
 
     def forward(self, batch):
         batch = batch.float()
-        if self.cuda:
-            batch = batch.cuda()
+        #if self.cuda:
+         #   batch = batch.cuda()
 
         _is_training = self.model.network.training
         out = self.model.network(batch, is_training=_is_training)
